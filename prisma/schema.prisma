@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  CUSTODIO
+  GERENTE_ADMIN
+  GERENTE_CONTABLE
+  GERENTE_GENERAL
+}
+
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  nombre       String
+  role         Role
+  activo       Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  gastos       Gasto[]
+  aprobaciones Aprobacion[]
+  reembolsos   Reembolso[]
+}
+
+model Fondo {
+  id           String   @id @default(uuid())
+  montoTotal   Float    @default(1000)
+  saldoActual  Float    @default(1000)
+  umbralAlerta Float    @default(200)
+  montoMaximo  Float    @default(150)
+  updatedAt    DateTime @updatedAt
+}
+
+model Area {
+  id           String   @id @default(uuid())
+  nombre       String
+  descripcion  String?
+  activo       Boolean  @default(true)
+  // Presupuesto de caja chica propio de cada área.
+  montoTotal   Float    @default(1000)
+  saldoActual  Float    @default(1000)
+  umbralAlerta Float    @default(200)
+  montoMaximo  Float    @default(150)
+  createdAt    DateTime @default(now())
+  gastos       Gasto[]
+}
+
+enum Categoria {
+  PAPELERIA
+  VIATICOS
+  MOVILIDAD
+  ENVIOS
+  PAGO_CARTAS
+  ARTICULOS_MENORES
+  SERVICIOS
+  OTROS
+}
+
+enum TipoComprobante {
+  FACTURA
+  BOLETA_ELECTRONICA
+  TICKET
+  NOTA_VENTA
+  PLANILLA_MOVILIDAD
+}
+
+enum EstadoGasto {
+  PENDIENTE
+  APROBADO_N1
+  APROBADO_N2
+  APROBADO_FINAL
+  RECHAZADO
+}
+
+model Gasto {
+  id                String          @id @default(uuid())
+  fecha             DateTime
+  monto             Float
+  descripcion       String
+  categoria         Categoria
+  areaId            String
+  area              Area            @relation(fields: [areaId], references: [id])
+  tipoComprobante   TipoComprobante
+  numeroComprobante String?
+  comprobanteUrl    String?
+  estado            EstadoGasto     @default(PENDIENTE)
+  creadoPor         String
+  user              User            @relation(fields: [creadoPor], references: [id])
+  aprobaciones      Aprobacion[]
+  reembolso         ReembolsoGasto?
+  createdAt         DateTime        @default(now())
+}
+
+model Aprobacion {
+  id          String   @id @default(uuid())
+  gastoId     String
+  gasto       Gasto    @relation(fields: [gastoId], references: [id])
+  aprobadoPor String
+  user        User     @relation(fields: [aprobadoPor], references: [id])
+  nivel       Int
+  accion      String
+  observacion String?
+  fecha       DateTime @default(now())
+}
+
+enum EstadoReembolso {
+  SOLICITADO
+  EN_REVISION
+  REEMBOLSADO
+}
+
+model Reembolso {
+  id             String           @id @default(uuid())
+  montoTotal     Float
+  estado         EstadoReembolso  @default(SOLICITADO)
+  solicitadoPor  String
+  user           User             @relation(fields: [solicitadoPor], references: [id])
+  gastos         ReembolsoGasto[]
+  fechaSolicitud DateTime         @default(now())
+  fechaReembolso DateTime?
+  observacion    String?
+}
+
+model ReembolsoGasto {
+  id          String    @id @default(uuid())
+  reembolsoId String
+  reembolso   Reembolso @relation(fields: [reembolsoId], references: [id])
+  gastoId     String    @unique
+  gasto       Gasto     @relation(fields: [gastoId], references: [id])
+}

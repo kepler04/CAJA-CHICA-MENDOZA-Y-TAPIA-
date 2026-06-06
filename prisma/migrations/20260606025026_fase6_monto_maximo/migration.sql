@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Fondo" ADD COLUMN     "montoMaximo" DOUBLE PRECISION NOT NULL DEFAULT 150;

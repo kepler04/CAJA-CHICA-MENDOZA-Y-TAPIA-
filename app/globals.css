@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 215 35% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 35% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 35% 18%;
+
+    /* Azul corporativo Mendoza y Tapia (#1e3a5f aprox.) */
+    --primary: 213 52% 25%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 213 30% 94%;
+    --secondary-foreground: 213 52% 25%;
+
+    --muted: 213 25% 95%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 40% 94%;
+    --accent-foreground: 213 52% 25%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 152 56% 36%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 215 35% 18%;
+
+    --border: 214 25% 88%;
+    --input: 214 25% 88%;
+    --ring: 213 52% 35%;
+
+    --radius: 0.625rem;
+
+    /* Tokens del sidebar (azul oscuro corporativo) */
+    --sidebar: 211 52% 25%; /* #1e3a5f */
+    --sidebar-foreground: 210 30% 92%;
+    --sidebar-muted: 211 30% 70%;
+    --sidebar-active: 211 49% 32%; /* #2d5494 */
+    --sidebar-active-foreground: 0 0% 100%;
+    --sidebar-border: 211 40% 32%;
+    --sidebar-ring: 211 60% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv05", "ss01", "tnum";
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Números tabulares para montos de dinero */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
