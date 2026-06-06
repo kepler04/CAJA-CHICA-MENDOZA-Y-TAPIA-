@@ -7,6 +7,8 @@ import {
 } from "@/app/actions/reembolsos";
 import { ReembolsosClient } from "./reembolsos-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function ReembolsosPage() {
   const user = await getSessionUser();
   if (!user) redirect("/login");

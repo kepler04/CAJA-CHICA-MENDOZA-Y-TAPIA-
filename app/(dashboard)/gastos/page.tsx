@@ -5,6 +5,8 @@ import { getSessionUser } from "@/lib/auth";
 import { getGastos } from "@/app/actions/gastos";
 import { GastosClient } from "./gastos-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function GastosPage() {
   const user = await getSessionUser();
   if (!user) redirect("/login");

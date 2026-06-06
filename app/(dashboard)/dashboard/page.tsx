@@ -12,6 +12,8 @@ import { EstadoBadge } from "@/components/estado-badge";
 import { DonutCategorias, type DonutDato } from "./donut-categorias";
 import { FondoCard } from "./fondo-card";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const user = await getSessionUser();
 

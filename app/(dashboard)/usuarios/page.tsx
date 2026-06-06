@@ -5,6 +5,8 @@ import { getSessionUser } from "@/lib/auth";
 import { isAdminConfigured } from "@/lib/supabase/admin";
 import { UsuariosClient } from "./usuarios-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function UsuariosPage() {
   const user = await getSessionUser();
 

@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { getSessionUser } from "@/lib/auth";
 import { ReportesClient } from "./reportes-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function ReportesPage({
   searchParams,
 }: {

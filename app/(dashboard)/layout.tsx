@@ -7,6 +7,10 @@ import { getResumenFondo } from "@/lib/fondo";
 import { prisma } from "@/lib/prisma";
 import { ToastProvider } from "@/components/ui/toast";
 
+// Todas las rutas del panel consultan la BD y la sesión: nunca se
+// prerenderizan en build. Se renderizan por petición.
+export const dynamic = "force-dynamic";
+
 export default async function DashboardLayout({
   children,
 }: {

@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/table";
 import { EmptyState } from "@/components/empty-state";
 
+export const dynamic = "force-dynamic";
+
 export default async function ConfiguracionPage() {
   const user = await getSessionUser();
   if (!user) redirect("/login");
